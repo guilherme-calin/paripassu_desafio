@@ -1,0 +1,18 @@
+.ManagerPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding: 1rem 0;
+}
+
+.ManagerPage .last-served{
+    width: 20vw;
+    height: 25vh;
+}
+
+.ManagerPage .options-container{
+    width: 55.31vw;
+    height: 50.27vh;
+}
+

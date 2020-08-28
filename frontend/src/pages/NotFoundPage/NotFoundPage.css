@@ -1,0 +1,17 @@
+.NotFoundPage{
+    border: 1px solid black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.NotFoundPage span{
+    font-family: Serif;
+    font-size: 4rem;
+}
+
+.NotFoundPage span:first-of-type{
+    font-size: 8rem;
+}

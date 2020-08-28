@@ -1,0 +1,87 @@
+.App{
+  font-size: 16px;
+}
+
+.App .header{
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #0E5880;
+  height: 6.5vh;
+}
+
+.App .navigation{
+  display: flex;
+  font-family: Serif;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.App .navigation{
+  list-style: none;
+}
+
+.App .navigation li{
+  padding: 0 1vw;
+}
+
+.App .navigation li:hover{
+  opacity: 0.8;
+}
+
+
+.App .navigation li::before{
+  content: "• ";
+  color: white;
+}
+
+.App .navigation li *{
+  text-decoration: none;
+  transition: opacity, color 0.5s;
+}
+
+.App .navigation li *:not(.active){
+  color: white;
+}
+
+.App .navigation li *:not(.active):hover{
+  color: #FFDF00;
+}
+
+
+.App .navigation .active{
+  color: #FFDF00;
+}
+
+.App img{
+  padding-left: 1vw;
+  width: 10%;
+  height: auto;
+}
+
+.App main{
+  height: 85vh;
+}
+
+.App .footer{
+  background-color: #0E5880;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: Sans;
+  height: 6.5vh;
+  justify-content: center;
+  width: 100vw;
+  position: sticky;
+  left: 0;
+  bottom: 0;
+}
+
+.App .footer span{
+  font-family: "Lucida Sans";
+  font-size: 0.75rem;
+  padding-left: 1vw;
+}

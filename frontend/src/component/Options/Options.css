@@ -1,0 +1,74 @@
+.Options{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.5);
+    margin: 3.75% 0;
+    width: 100%;
+    height: 100%;
+}
+
+.Options .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-family: Serif;
+    height: 27.62%;
+    background-color: #F1F1F1;
+
+}
+
+.Options .body{
+    height: 73.38%;
+    width: 100%;
+    background-color: #FAFAFA;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Options .body div{
+    height: 30.52%;
+    width: 56.5%;
+    font-size: 2.4rem;
+    font-family: Serif;
+    color: white;
+}
+
+.Options .body button {
+    width: 100%;
+    height: 100%;
+    font-size: 2.4rem;
+    font-family: Serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.75);
+    transition-property: opacity;
+    transition-duration: 1s;
+}
+
+.Options .body button:hover {
+    opacity: 0.8;
+}
+
+.Options .body button:active {
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.75);
+}
+
+.Options img{
+    animation: rotation 4s infinite linear;
+}
+
+@keyframes rotation {
+    from{
+        transform: rotate(359deg);
+    }to{
+         transform: rotate(0deg);
+     }
+}
+

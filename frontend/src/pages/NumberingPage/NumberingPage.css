@@ -1,0 +1,51 @@
+.NumberingPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 1rem 0;
+}
+
+.NumberingPage .current{
+    width: 33%;
+    height: 50%;
+}
+
+.NumberingPage .last-container{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 47%;
+}
+
+.NumberingPage .last-container .last{
+    width: 24.75%;
+    height: 90%;
+    padding: 1rem;
+}
+
+.NumberingPage .last-container .last span{
+    font-size: 75%;
+}
+
+.NumberingPage img{
+    animation: rotation 4s infinite linear;
+    width: 20%;
+    height: auto;
+}
+
+.NumberingPage .loading{
+    font-family: Serif;
+    font-size: 3rem;
+}
+
+@keyframes rotation {
+    from{
+       transform: rotate(359deg);
+    }to{
+       transform: rotate(0deg);
+    }
+}
