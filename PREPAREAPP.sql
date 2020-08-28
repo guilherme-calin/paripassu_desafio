@@ -1,0 +1,99 @@
+------------------------------------------------
+--COMANDOS DDL
+------------------------------------------------
+CREATE TABLE IF NOT EXISTS QUEUE_NUMBERING_TYPE
+(
+	COD CHAR(1) PRIMARY KEY,
+	DESCRIPTION VARCHAR(100) NULL
+);
+
+CREATE TABLE IF NOT EXISTS QUEUE_NUMBERING
+(
+	NUMBERING_ID BIGSERIAL PRIMARY KEY,
+	DATETIME_REQUEST TIMESTAMPTZ NOT NULL,
+	DATETIME_SERVED TIMESTAMPTZ NULL,
+	NUMBERING INT2 NOT NULL,
+	NUMBERING_TYPE CHAR(1) NOT NULL,
+	SERVED BOOLEAN NOT NULL DEFAULT FALSE,
+	CONSTRAINT FK_QUEUE_NUMBERING_TYPE_COD 
+	FOREIGN KEY (NUMBERING_TYPE)
+	REFERENCES QUEUE_NUMBERING_TYPE(COD)
+);
+
+CREATE SEQUENCE IF NOT EXISTS SEQ_NORMAL_QUEUE_NUMBERING 
+INCREMENT BY 1
+MAXVALUE 9999 CYCLE
+START WITH 1
+OWNED BY QUEUE_NUMBERING.NUMBERING_ID;
+
+CREATE SEQUENCE IF NOT EXISTS SEQ_PRIORITY_QUEUE_NUMBERING 
+INCREMENT BY 1
+MAXVALUE 9999 CYCLE
+START WITH 1
+OWNED BY QUEUE_NUMBERING.NUMBERING_ID;
+
+----------------------------------------------------------
+--COMANDOS DML
+----------------------------------------------------------
+INSERT INTO QUEUE_NUMBERING_TYPE
+VALUES ('N', 'Fila normal de atendimento'),
+	   ('P', 'Fila prioritária de atendimento para gestantes e idosos');
+----------------------------------------------------------
+--FUNÇÕES EM PL/pgSQL
+----------------------------------------------------------
+CREATE OR REPLACE FUNCTION getQueueNumbering(numberingType char(1))
+RETURNS INT2 AS $$
+	DECLARE
+		numbering INTEGER;
+	BEGIN
+		IF numberingType = 'N' THEN
+			SELECT nextval('SEQ_NORMAL_QUEUE_NUMBERING') INTO numbering;
+		ELSEIF numberingType = 'P' THEN
+			SELECT nextval('SEQ_PRIORITY_QUEUE_NUMBERING') INTO numbering;
+		ELSE
+			RAISE EXCEPTION 'Tipo de numeração inválida!'; 
+		END IF;
+
+		RETURN numbering;
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION resetQueueNumbering() 
+RETURNS BOOLEAN AS $$
+	BEGIN
+		ALTER SEQUENCE SEQ_NORMAL_QUEUE_NUMBERING RESTART WITH 1;
+		ALTER SEQUENCE SEQ_PRIORITY_QUEUE_NUMBERING RESTART WITH 1;
+		
+		RETURN true;
+	END;
+$$ language plpgsql;
+
+SELECT resetQueueNumbering();
+
+--O mais correto seria utilizar uma procedure ao invés de uma function,
+--mas para isso seria necessário utilizar o PostgreSQL na versão 11 ou superior
+CREATE OR REPLACE FUNCTION insertQueueNumbering(numberingType char(1)) 
+RETURNS TABLE(
+	NUMBERING_ID BIGINT,
+	DATETIME_REQUEST TIMESTAMPTZ,
+	DATETIME_SERVED TIMESTAMPTZ,
+	NUMBERING INT2,
+	NUMBERING_TYPE CHAR(1),
+	SERVED BOOLEAN
+) AS $$
+	DECLARE
+	numberingId INTEGER;
+	BEGIN
+		INSERT INTO QUEUE_NUMBERING(DATETIME_REQUEST, NUMBERING, NUMBERING_TYPE)
+		VALUES (NOW(), getQueueNumbering(numberingType), numberingType)
+		RETURNING QUEUE_NUMBERING.NUMBERING_ID INTO numberingId;
+		
+		
+		RETURN QUERY SELECT * 
+				FROM QUEUE_NUMBERING 
+				WHERE QUEUE_NUMBERING.NUMBERING_ID = numberingId;
+	END;
+$$ language plpgsql;
+
+
+

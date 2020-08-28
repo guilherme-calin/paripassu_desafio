@@ -1,0 +1,6 @@
+#Utilizando SGBD PostgreSQL
+datasource.host: "127.0.0.1"
+datasource.port: "5433"
+datasource.user: "postgres"
+datasource.password: "elephant"
+datasource.dbname: "paripassu"
