@@ -1,6 +1,6 @@
 # paripassu_desafio
 Repositório do projeto desenvolvido para o processo seletivo da empresa Pari Passu. Se trata de uma aplicação para controle de senhas em filas bancárias.
-O frontend foi implementado em React utilizando Typescript e o backend foi implementado utilizando Spring Framework em Java.
+O frontend foi implementado em React utilizando Typescript e o backend foi implementado em Spring Framework utilizando Java.
 
 # Deploy
 Para utilizar a aplicação, siga os passos abaixo:
